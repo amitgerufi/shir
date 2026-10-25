@@ -9,6 +9,12 @@
 <meta property="og:locale" content="he_IL">
 <meta property="og:title" content="בר מצווה לשיר גרופי 💙">
 <meta property="og:description" content="יום שלישי 10.11.26, צור יגאל. לחצו לאישור הגעה בשתי לחיצות.">
+<meta property="og:image" content="https://amitgerufi.github.io/shir/invite.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:alt" content="הזמנה לבר המצווה של שיר גרופי, יום ג׳ 10.11.2026, צור יגאל">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2a33; --accent:#2f5d8a; --accent-d:#234666; --soft:#e4ebf3; --no:#8a4b3a; }
   * { box-sizing:border-box; }
@@ -17,6 +23,7 @@
   .card { background:var(--card); border-radius:20px; padding:24px 20px; box-shadow:0 2px 12px rgba(0,0,0,.08); margin-bottom:16px; }
   h1 { font-size:30px; margin:0 0 4px; text-align:center; color:var(--accent-d); }
   .hello { text-align:center; font-size:22px; margin:0 0 4px; }
+  .hello.top { margin:0 0 12px; font-weight:700; color:var(--accent-d); }
   .sub { text-align:center; margin:0 0 14px; }
   .ev { background:var(--soft); border-radius:14px; padding:14px 16px; }
   .ev div { margin:3px 0; }
@@ -36,22 +43,16 @@
   .wa { display:block; text-align:center; margin-top:14px; color:var(--accent-d); font-size:17px; }
   .err { color:#b00020; text-align:center; margin-top:10px; font-size:18px; display:none; }
   .hidden { display:none; }
+  .invite { display:block; width:100%; height:auto; border-radius:20px; box-shadow:0 2px 12px rgba(0,0,0,.08); margin-bottom:16px; }
   .link { background:none; border:0; font:inherit; font-size:17px; color:var(--accent-d); text-decoration:underline; cursor:pointer; margin-top:12px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="card">
-    <p class="hello" id="hello">שלום וברוכים הבאים</p>
-    <h1>מתרגשים לחגוג בר מצווה<br>לשיר גרופי</h1>
-    <p class="sub">יום שלישי, 10.11.26</p>
-    <div class="ev">
-      <div>🕒 <b>15:00</b> – עלייה לתורה</div>
-      <div>🕟 <b>16:30</b> – סעודה וחיבוקים</div>
-      <div>📍 צור יגאל, בית הכנסת המרכזי <a id="nav" href="#" class="hidden" target="_blank" rel="noopener">ניווט</a></div>
-    </div>
-  </div>
+  <p class="hello top" id="hello">שלום וברוכים הבאים</p>
+
+  <img class="invite" src="invite.jpg" alt="הזמנה לבר המצווה של שיר גרופי: יום ג׳ 10.11.2026, 15:00 התכנסות ועלייה לתורה, 16:30 ארוחה וברכות, בית הכנסת המרכזי צור יגאל" width="1024" height="1536">
 
   <div class="card" id="form">
     <h2>כמה תגיעו?</h2>
@@ -68,6 +69,15 @@
     <div class="big" id="doneTitle"></div>
     <p id="doneText"></p>
     <button class="link" id="change">לשנות את התשובה</button>
+  </div>
+
+  <div class="card">
+    <div class="ev">
+      <div>📅 <b>יום ג׳, 10.11.26</b></div>
+      <div>🕒 <b>15:00</b> – התכנסות ועלייה לתורה</div>
+      <div>🕟 <b>16:30</b> – ארוחה וברכות</div>
+      <div>📍 בית הכנסת המרכזי, צור יגאל <a id="nav" href="#" class="hidden" target="_blank" rel="noopener">ניווט</a></div>
+    </div>
   </div>
 
 </div>
