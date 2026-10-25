@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>בר מצווה לשיר גרופי</title>
+<meta name="description" content="מתרגשים להזמין אתכם לבר המצווה של שיר גרופי, יום שלישי 10.11.26. אפשר לאשר הגעה בשתי לחיצות.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="בר מצווה לשיר גרופי 💙">
+<meta property="og:description" content="יום שלישי 10.11.26, צור יגאל. לחצו לאישור הגעה בשתי לחיצות.">
 <style>
   :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2a33; --accent:#2f5d8a; --accent-d:#234666; --soft:#e4ebf3; --no:#8a4b3a; }
   * { box-sizing:border-box; }
@@ -42,9 +47,9 @@
     <h1>מתרגשים לחגוג בר מצווה<br>לשיר גרופי</h1>
     <p class="sub">יום שלישי, 10.11.26</p>
     <div class="ev">
-      <div>🕞 <b>15:00</b> – עלייה לתורה</div>
+      <div>🕒 <b>15:00</b> – עלייה לתורה</div>
       <div>🕟 <b>16:30</b> – סעודה וחיבוקים</div>
-      <div>📍 צור יגאל, בית הכנסת המרכזי <a id="waze" href="#" class="hidden">ניווט בוויז</a></div>
+      <div>📍 צור יגאל, בית הכנסת המרכזי <a id="nav" href="#" class="hidden" target="_blank" rel="noopener">ניווט</a></div>
     </div>
   </div>
 
@@ -56,7 +61,7 @@
     <textarea id="note" rows="2" placeholder="אפשר לכתוב כאן"></textarea>
     <button class="send" id="send" disabled>שליחה</button>
     <div class="err" id="err">משהו השתבש. נסו שוב, או שלחו לנו הודעה בוואטסאפ.</div>
-    <a class="wa" id="wa" href="#" class="hidden">או לחצו כאן לשליחה בוואטסאפ</a>
+    <a class="wa" id="wa" href="#">או לחצו כאן לשליחה בוואטסאפ</a>
   </div>
 
   <div class="card msg hidden" id="done">
@@ -70,7 +75,7 @@
 <script>
 // ===== הגדרות: למלא פעם אחת =====
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwl14-HtI6DJkoffh5PeXAXB94iK-vwdcKqC4-VZlJrUhwarT76DoV0s7exUQz8PRUvQ/exec";          // כתובת ה-Web App של Google Apps Script
-const WAZE_URL   = "";          // קישור לוויז (אופציונלי)
+const NAV_URL    = "https://maps.app.goo.gl/mRvwJmoJVAAFp5TR7?g_st=ac";          // קישור ניווט (גוגל מפות / וויז)
 const WA_NUMBER  = "";          // מספר וואטסאפ לגיבוי, בפורמט בינלאומי: 9725XXXXXXXX
 // =================================
 
@@ -80,7 +85,7 @@ const name = q.get("n") || "";
 let choice = null; // מספר, או 0 = לא מגיעים
 
 if (name) document.getElementById("hello").textContent = "שלום " + name + " 💙";
-if (WAZE_URL) { const w = document.getElementById("waze"); w.href = WAZE_URL; w.classList.remove("hidden"); }
+if (NAV_URL) { const w = document.getElementById("nav"); w.href = NAV_URL; w.classList.remove("hidden"); }
 
 const grid = document.getElementById("grid");
 const send = document.getElementById("send");
