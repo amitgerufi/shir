@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בר מצווה לשיר גרופי</title>
+<style>
+  :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2a33; --accent:#2f5d8a; --accent-d:#234666; --soft:#e4ebf3; --no:#8a4b3a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Heebo","Assistant",Arial,sans-serif; font-size:20px; line-height:1.5; }
+  .wrap { max-width:520px; margin:0 auto; padding:20px 16px 40px; }
+  .card { background:var(--card); border-radius:20px; padding:24px 20px; box-shadow:0 2px 12px rgba(0,0,0,.08); margin-bottom:16px; }
+  h1 { font-size:30px; margin:0 0 4px; text-align:center; color:var(--accent-d); }
+  .hello { text-align:center; font-size:22px; margin:0 0 4px; }
+  .sub { text-align:center; margin:0 0 14px; }
+  .ev { background:var(--soft); border-radius:14px; padding:14px 16px; }
+  .ev div { margin:3px 0; }
+  .ev a { color:var(--accent-d); font-weight:700; }
+  h2 { font-size:24px; text-align:center; margin:0 0 14px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .num { font:inherit; font-size:28px; font-weight:700; padding:16px 0; border:2px solid var(--accent); background:#fff; color:var(--accent-d); border-radius:14px; cursor:pointer; }
+  .num.sel { background:var(--accent); color:#fff; }
+  .no { display:block; width:100%; margin-top:12px; font:inherit; font-size:20px; padding:14px; border:2px solid var(--no); background:#fff; color:var(--no); border-radius:14px; cursor:pointer; }
+  .no.sel { background:var(--no); color:#fff; }
+  .send { display:block; width:100%; margin-top:18px; font:inherit; font-size:26px; font-weight:700; padding:16px; border:0; background:var(--accent-d); color:#fff; border-radius:14px; cursor:pointer; }
+  .send:disabled { opacity:.35; cursor:default; }
+  .note-toggle { background:none; border:0; font:inherit; font-size:17px; color:var(--accent-d); text-decoration:underline; cursor:pointer; margin-top:14px; display:block; width:100%; }
+  textarea { width:100%; font:inherit; font-size:18px; padding:10px; border-radius:10px; border:1px solid #bbb; margin-top:8px; display:none; }
+  .msg { text-align:center; }
+  .big { font-size:26px; font-weight:700; color:var(--accent-d); }
+  .wa { display:block; text-align:center; margin-top:14px; color:var(--accent-d); font-size:17px; }
+  .err { color:#b00020; text-align:center; margin-top:10px; font-size:18px; display:none; }
+  .hidden { display:none; }
+  .link { background:none; border:0; font:inherit; font-size:17px; color:var(--accent-d); text-decoration:underline; cursor:pointer; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card">
+    <p class="hello" id="hello">שלום וברוכים הבאים</p>
+    <h1>מתרגשים לחגוג בר מצווה<br>לשיר גרופי</h1>
+    <p class="sub">יום שלישי, 10.11.26</p>
+    <div class="ev">
+      <div>🕞 <b>15:00</b> – עלייה לתורה</div>
+      <div>🕟 <b>16:30</b> – סעודה וחיבוקים</div>
+      <div>📍 צור יגאל, בית הכנסת המרכזי <a id="waze" href="#" class="hidden">ניווט בוויז</a></div>
+    </div>
+  </div>
+
+  <div class="card" id="form">
+    <h2>כמה תגיעו?</h2>
+    <div class="grid" id="grid"></div>
+    <button class="no" id="no">לצערנו לא נוכל להגיע</button>
+    <button class="note-toggle" id="noteBtn">יש הערה? (אלרגיה, צריך הסעה...)</button>
+    <textarea id="note" rows="2" placeholder="אפשר לכתוב כאן"></textarea>
+    <button class="send" id="send" disabled>שליחה</button>
+    <div class="err" id="err">משהו השתבש. נסו שוב, או שלחו לנו הודעה בוואטסאפ.</div>
+    <a class="wa" id="wa" href="#" class="hidden">או לחצו כאן לשליחה בוואטסאפ</a>
+  </div>
+
+  <div class="card msg hidden" id="done">
+    <div class="big" id="doneTitle"></div>
+    <p id="doneText"></p>
+    <button class="link" id="change">לשנות את התשובה</button>
+  </div>
+
+</div>
+
+<script>
+// ===== הגדרות: למלא פעם אחת =====
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwl14-HtI6DJkoffh5PeXAXB94iK-vwdcKqC4-VZlJrUhwarT76DoV0s7exUQz8PRUvQ/exec";          // כתובת ה-Web App של Google Apps Script
+const WAZE_URL   = "";          // קישור לוויז (אופציונלי)
+const WA_NUMBER  = "";          // מספר וואטסאפ לגיבוי, בפורמט בינלאומי: 9725XXXXXXXX
+// =================================
+
+const q = new URLSearchParams(location.search);
+const id = q.get("f") || "";
+const name = q.get("n") || "";
+let choice = null; // מספר, או 0 = לא מגיעים
+
+if (name) document.getElementById("hello").textContent = "שלום " + name + " 💙";
+if (WAZE_URL) { const w = document.getElementById("waze"); w.href = WAZE_URL; w.classList.remove("hidden"); }
+
+const grid = document.getElementById("grid");
+const send = document.getElementById("send");
+const noBtn = document.getElementById("no");
+for (let i = 1; i <= 6; i++) {
+  const b = document.createElement("button");
+  b.className = "num"; b.textContent = i;
+  b.onclick = () => pick(i, b);
+  grid.appendChild(b);
+}
+noBtn.onclick = () => pick(0, noBtn);
+
+function pick(v, el) {
+  choice = v;
+  document.querySelectorAll(".num,.no").forEach(x => x.classList.remove("sel"));
+  el.classList.add("sel");
+  send.disabled = false;
+  updateWa();
+}
+
+document.getElementById("noteBtn").onclick = () => {
+  const t = document.getElementById("note"); t.style.display = "block"; t.focus();
+};
+
+function waText() {
+  const who = name || "אנחנו";
+  return choice === 0 ? who + ": לצערנו לא נוכל להגיע לבר המצווה" : who + ": נגיע " + choice + " אנשים לבר המצווה של שיר 🎉";
+}
+function updateWa() {
+  const a = document.getElementById("wa");
+  if (WA_NUMBER) a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(waText());
+  else a.style.display = "none";
+}
+updateWa();
+
+send.onclick = async () => {
+  if (choice === null) return;
+  send.disabled = true; send.textContent = "שולח...";
+  document.getElementById("err").style.display = "none";
+  const payload = { id, name, count: choice, status: choice === 0 ? "לא מגיעים" : "מגיעים", note: document.getElementById("note").value };
+  try {
+    if (!SCRIPT_URL) throw new Error("no url");
+    await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+    show();
+  } catch (e) {
+    document.getElementById("err").style.display = "block";
+    send.disabled = false; send.textContent = "שליחה";
+  }
+};
+
+function show() {
+  document.getElementById("form").classList.add("hidden");
+  const d = document.getElementById("done"); d.classList.remove("hidden");
+  if (choice === 0) {
+    document.getElementById("doneTitle").textContent = "תודה שעדכנתם";
+    document.getElementById("doneText").textContent = "מצטערים שלא תוכלו להגיע, ונשמח לראות אתכם בשמחות הבאות.";
+  } else {
+    document.getElementById("doneTitle").textContent = "תודה! רשמנו " + choice + (choice === 1 ? " אורח" : " אורחים");
+    document.getElementById("doneText").textContent = "מצפים לראות אתכם ב-10.11 🎉";
+  }
+}
+document.getElementById("change").onclick = () => {
+  document.getElementById("done").classList.add("hidden");
+  document.getElementById("form").classList.remove("hidden");
+  send.disabled = false; send.textContent = "שליחה";
+};
+</script>
+</body>
+</html>
