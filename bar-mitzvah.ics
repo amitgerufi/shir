@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Gerufi//Bar Mitzvah//HE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:shir-gerufi-bar-mitzvah-20261110@amitgerufi.github.io
+DTSTAMP:20261026T000000Z
+DTSTART:20261110T130000Z
+DTEND:20261110T160000Z
+SUMMARY:בר מצווה – שיר גרופי
+LOCATION:בית הכנסת המרכזי\, צור יגאל
+DESCRIPTION:15:00 התכנסות ועלייה לתורה\n16:30 ארוחה 
+ וברכות\n\nניווט בוויז: https://waze.com/ul/hsv8zk0q3y
+URL:https://amitgerufi.github.io/shir/
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:בר מצווה – שיר גרופי
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

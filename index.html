@@ -77,8 +77,9 @@
     <div class="big" id="doneTitle"></div>
     <p id="doneText"></p>
     <div id="doneNav" class="hidden">
-      <p class="navs-title">איך מגיעים?</p>
+      <p class="navs-title">שמירה ביומן וניווט</p>
       <div class="navs">
+        <a class="navbtn cal" id="calBtn" href="bar-mitzvah.ics">📅 הוספה ליומן</a>
         <a class="navbtn waze js-waze" href="#" target="_blank" rel="noopener">🚗 ניווט בוויז</a>
       </div>
     </div>
@@ -104,6 +105,15 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwl14-HtI6DJkoffh5PeXAXB94iK-vwdcKqC4-VZlJrUhwarT76DoV0s7exUQz8PRUvQ/exec";          // כתובת ה-Web App של Google Apps Script
 const NAV_URL    = "https://maps.app.goo.gl/mRvwJmoJVAAFp5TR7?g_st=ac";          // קישור לגוגל מפות
 const WAZE_URL   = "https://waze.com/ul/hsv8zk0q3y";  // קישור לוויז
+// אייפון ומק: קובץ יומן (נפתח ביומן של אפל). שאר המכשירים: יומן גוגל
+const CAL_GOOGLE = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+  + "&text=" + encodeURIComponent("בר מצווה – שיר גרופי")
+  + "&dates=20261110T130000Z/20261110T160000Z"
+  + "&details=" + encodeURIComponent("15:00 התכנסות ועלייה לתורה\n16:30 ארוחה וברכות\n\nניווט בוויז: " + WAZE_URL)
+  + "&location=" + encodeURIComponent("בית הכנסת המרכזי, צור יגאל");
+const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+const cal = document.getElementById("calBtn");
+if (!isApple) { cal.href = CAL_GOOGLE; cal.target = "_blank"; cal.rel = "noopener"; }
 const WA_NUMBER  = "";          // מספר וואטסאפ לגיבוי, בפורמט בינלאומי: 9725XXXXXXXX
 // =================================
 
